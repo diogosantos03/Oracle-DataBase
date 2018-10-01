@@ -14,17 +14,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class InsertTableCliente extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtCod;
-	private JTextField txtNome;
-	private JTextField txtCidade;
-	private JButton btnMostrarTodos;
+	private JTextField txtCod, txtCidade, txtNome;
+	private JButton btnCarregar, btnMostrarTodos;
+	private JLabel lblLbnnome, lblCidade, lblCodigo;
 
 	/**
 	 * Launch the application.
@@ -41,7 +38,61 @@ public class InsertTableCliente extends JFrame {
 			}
 		});
 	}
-
+	
+	/**
+	 * Create the labels
+	 */
+	public void labels() {
+		lblLbnnome = new JLabel("Nome");
+		lblCidade = new JLabel("Cidade");
+		lblCodigo = new JLabel("Codigo");
+		
+		lblLbnnome.setBounds(224, 56, 46, 14);
+		contentPane.add(lblLbnnome);
+		
+		lblCidade.setBounds(357, 56, 46, 14);
+		contentPane.add(lblCidade);
+		
+		lblCodigo.setBounds(76, 56, 46, 14);
+		contentPane.add(lblCodigo);
+	}
+	
+	/**
+	 * Create the textFilds
+	 */
+	public void textFilds() {
+		txtCod = new JTextField();
+		txtNome = new JTextField();
+		txtCidade = new JTextField();
+		
+		txtCod.setBounds(54, 81, 86, 20);
+		contentPane.add(txtCod);
+		txtCod.setColumns(10);
+		
+		txtNome.setBounds(197, 81, 86, 20);
+		contentPane.add(txtNome);
+		txtNome.setColumns(10);
+		
+		txtCidade.setBounds(332, 81, 86, 20);
+		contentPane.add(txtCidade);
+		txtCidade.setColumns(10);
+	}
+	
+	/**
+	 * Create the buttons
+	 */
+	public void buttons() {
+		btnCarregar = new JButton("Carregar");
+		btnCarregar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCarregar.setBounds(194, 199, 101, 23);
+		contentPane.add(btnCarregar);
+		
+		btnMostrarTodos = new JButton("Mostrar Todos");
+		btnMostrarTodos.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnMostrarTodos.setBounds(184, 328, 132, 23);
+		contentPane.add(btnMostrarTodos);
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -52,36 +103,12 @@ public class InsertTableCliente extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
 		
-		JLabel lblLbnnome = new JLabel("Nome");
-		lblLbnnome.setBounds(224, 56, 46, 14);
-		contentPane.add(lblLbnnome);
+		labels();
+		textFilds();
+		buttons();
 		
-		JLabel lblCidade = new JLabel("Cidade");
-		lblCidade.setBounds(357, 56, 46, 14);
-		contentPane.add(lblCidade);
-		
-		JLabel lblCodigo = new JLabel("Codigo");
-		lblCodigo.setBounds(76, 56, 46, 14);
-		contentPane.add(lblCodigo);
-		
-		txtCod = new JTextField();
-		txtCod.setBounds(54, 81, 86, 20);
-		contentPane.add(txtCod);
-		txtCod.setColumns(10);
-		
-		txtNome = new JTextField();
-		txtNome.setBounds(197, 81, 86, 20);
-		contentPane.add(txtNome);
-		txtNome.setColumns(10);
-		
-		txtCidade = new JTextField();
-		txtCidade.setBounds(332, 81, 86, 20);
-		contentPane.add(txtCidade);
-		txtCidade.setColumns(10);
-		//==========================================================
-		
-		JButton btnCarregar = new JButton("Carregar");
 		btnCarregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -90,10 +117,14 @@ public class InsertTableCliente extends JFrame {
 					stm.setInt(1, Integer.parseInt(txtCod.getText()));
 					stm.setString(2, txtNome.getText());
 					stm.setString(3, txtCidade.getText());
-					
+		
 					stm.executeUpdate();
 					
 					stm.close();
+					
+					txtCod.setText("");
+					txtNome.setText("");
+					txtCidade.setText("");
 					
 				} catch (SQLException e) {
 					System.err.println(e.getMessage());
@@ -101,16 +132,13 @@ public class InsertTableCliente extends JFrame {
 				}
 			}
 		});
-		btnCarregar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCarregar.setBounds(194, 199, 101, 23);
-		contentPane.add(btnCarregar);
 		
-		btnMostrarTodos = new JButton("Mostrar Todos");
+		
+		
 		btnMostrarTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnMostrarTodos.setBounds(184, 328, 132, 23);
-		contentPane.add(btnMostrarTodos);
+		
 	}
 }
